@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYBER MATRIX </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #000000;
+            overflow: hidden;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        body {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        
+        .hud-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 30px;
+            background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.6) 100%);
+        }
+
+        .hud-header {
+            display: flex;
+            justify-content: space-between;
+            color: #D4AF37; 
+            font-size: 11px;
+            letter-spacing: 2px;
+            font-weight: 900;
+        }
+
+        .center-terminal {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .digital-clock {
+            font-size: clamp(44px, 8vw, 96px);
+            color: #ffffff;
+            font-weight: 900;
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.4), 0 0 40px rgba(214, 175, 55, 0.2);
+            margin-bottom: 10px;
+        }
+
+        .system-status {
+            color: #666666;
+            font-size: 10px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        .hud-footer {
+            display: flex;
+            justify-content: space-between;
+            color: #444444;
+            font-size: 9px;
+            letter-spacing: 1px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; color: #D4AF37; }
+        }
+    </style>
+</head>
+<body>
+
+    
+    <canvas id="matrixCanvas"></canvas>
+
+    
+    <div class="hud-overlay">
+        <div class="hud-header">
+            <div>CORE_CORE // OPERATIONAL_SYS</div>
+            <div id="fpsCounter">FPS: 60.00</div>
+        </div>
+
+        <div class="center-terminal">
+            <div class="digital-clock" id="clockDisplay">00:00:00</div>
+            <div class="system-status">STREAMING MATRIX DATA INFUSION...</div>
+        </div>
+
+        <div class="hud-footer">
+            <div>LOC_ID: LAG_NG_01</div>
+            <div>[ ENV_VAR: RENDER_ACTIVE ]</div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+
+      
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        
+        const mouse = { x: null, y: null, radius: 120 };
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+        window.addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        const alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_@#$';
+        const fontSize = 14;
+        const columns = Math.floor(canvas.width / fontSize) + 1;
+        const rainDrops = Array(columns).fill(1);
+
+        
+        let lastTime = 0;
+        let frameCount = 0;
+        let fps = 60;
+
+        function draw(timestamp) {
+            
+            frameCount++;
+            if (timestamp - lastTime >= 1000) {
+                fps = frameCount;
+                frameCount = 0;
+                lastTime = timestamp;
+                document.getElementById('fpsCounter').innerText = `FPS: ${fps}.00`;
+            }
+
+           
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+           
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                const x = i * fontSize;
+                const y = rainDrops[i] * fontSize;
+
+                
+                ctx.fillStyle = 'rgba(40, 40, 40, 0.4)'; 
+                ctx.font = fontSize + 'px monospace';
+
+                
+                if (mouse.x && mouse.y) {
+                    const dx = mouse.x - x;
+                    const dy = mouse.y - y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < mouse.radius) {
+                        ctx.fillStyle = '#D4AF37'; // Glow golden when mouse is near
+                        ctx.font = 'bold ' + (fontSize + 2) + 'px monospace';
+                    }
+                }
+
+                ctx.fillText(text, x, y);
+
+              
+                if (y > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+
+           
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('clockDisplay').innerText = `${hours}:${minutes}:${seconds}`;
+
+            requestAnimationFrame(draw);
+        }
+
+        
+        requestAnimationFrame(draw);
+    </script>
+</body>
+</html>
