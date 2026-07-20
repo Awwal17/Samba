@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA | Garden. Lounge. Bar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a, button, select, input {
+            text-decoration: none;
+            color: inherit;
+            background: none;
+            border: none;
+            outline: none;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px max(8%, 20px);
+            background-color: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(226, 91, 38, 0.1);
+            letter-spacing: 2px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-badge {
+            background: #ffffff;
+            padding: 4px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 38px;
+            width: 38px;
+        }
+
+        .logo-img {
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+            mix-blend-mode: normal;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav a {
+            margin-left: 35px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #888888;
+            letter-spacing: 2px;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #E25B26;
+            text-shadow: 0 0 8px rgba(226, 91, 38, 0.4);
+        }
+
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            background: linear-gradient(to bottom, rgba(5,5,5,0.4) 0%, #050505 95%), 
+                        url('https://images.unsplash.com/photo-1574096079513-d8259312b785?auto=format&fit=crop&w=1600&q=80') no-repeat center center/cover;
+        }
+
+        .hero h1 {
+            font-size: clamp(34px, 6vw, 68px);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            max-width: 900px;
+        }
+
+        .hero h1 span {
+            color: #E25B26;
+            display: block;
+            font-size: clamp(14px, 2vw, 20px);
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            color: #aaaaaa;
+            font-size: clamp(15px, 1.8vw, 18px);
+            margin-bottom: 45px;
+            max-width: 650px;
+            letter-spacing: 0.5px;
+            font-weight: 300;
+        }
+
+        .btn {
+            background-color: #E25B26;
+            color: #ffffff;
+            padding: 20px 48px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            border: 1px solid #E25B26;
+            box-shadow: 0 4px 20px rgba(226, 91, 38, 0.15);
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            color: #E25B26;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(226, 91, 38, 0.3);
+        }
+
+        .services {
+            padding: 120px max(8%, 20px);
+            background-color: #050505;
+        }
+
+        .section-title {
+            font-size: clamp(24px, 4vw, 36px);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: 900;
+        }
+
+        .section-subtitle {
+            color: #666666;
+            text-align: center;
+            margin-bottom: 70px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
+        }
+
+        .card {
+            background-color: #0c0c0c;
+            border: 1px solid #161616;
+            border-radius: 6px;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .card-img-wrapper {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease, filter 0.6s ease;
+            filter: brightness(0.75) contrast(1.1);
+        }
+
+        .card-img-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(to top, #0c0c0c, transparent);
+        }
+
+        .card-content {
+            padding: 25px 30px 35px 30px;
+            flex-grow: 1;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #E25B26;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+            z-index: 2;
+        }
+
+        .card:hover {
+            border-color: #222222;
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+        }
+
+        .card:hover .card-img {
+            transform: scale(1.08);
+            filter: brightness(0.9) contrast(1.1);
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card h3 {
+            font-size: 17px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .card h3 span {
+            color: #E25B26;
+            margin-left: 5px;
+        }
+
+        .card p {
+            color: #888888;
+            font-size: 13.5px;
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        /* MODAL STYLES */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-container {
+            background-color: #0c0c0c;
+            border: 1px solid #222222;
+            border-radius: 8px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.9);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #ffffff;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10;
+            width: 36px;
+            height: 36px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: #E25B26;
+            border-color: #E25B26;
+        }
+
+        .modal-header-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .modal-body {
+            padding: 35px;
+        }
+
+        .modal-subtitle {
+            color: #E25B26;
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .modal-title {
+            font-size: 26px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 900;
+            margin-bottom: 15px;
+        }
+
+        .modal-desc {
+            color: #aaaaaa;
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .modal-menu-title {
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ffffff;
+            font-weight: 700;
+            border-bottom: 1px solid #222;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .modal-menu-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+
+        .modal-menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .modal-menu-item-name {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .modal-menu-item-price {
+            color: #E25B26;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        /* MENU SECTION */
+        .menu-section {
+            padding: 120px max(8%, 20px);
+            background-color: #090909;
+            border-top: 1px solid #111111;
+        }
+
+        .menu-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 12px 30px;
+            border-radius: 4px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            color: #666666;
+            border: 1px solid #1c1c1c;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            color: #E25B26;
+            border-color: #E25B26;
+            background-color: rgba(226, 91, 38, 0.02);
+        }
+
+        .menu-container {
+            display: flex;
+            gap: 50px;
+            align-items: stretch;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .menu-featured-img {
+            flex: 0.85;
+            position: relative;
+            border: 1px solid #161616;
+            border-radius: 6px;
+            overflow: hidden;
+            min-height: 380px;
+            background-color: #0c0c0c;
+        }
+
+        .menu-featured-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.8) contrast(1.1);
+            transition: opacity 0.4s ease, transform 0.6s ease;
+        }
+
+        .menu-featured-img:hover img {
+            transform: scale(1.05);
+        }
+
+        .img-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            border-left: 2px solid #E25B26;
+            border-radius: 4px;
+        }
+
+        .img-caption h5 {
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .img-caption p {
+            font-size: 10px;
+            color: #E25B26;
+            letter-spacing: 1px;
+            margin-top: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .menu-content {
+            flex: 1.15;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .menu-grid {
+            display: none;
+            flex-direction: column;
+            gap: 30px;
+            width: 100%;
+        }
+
+        .menu-grid.active {
+            display: flex;
+        }
+
+        .menu-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-bottom: 1px dashed #222222;
+            padding-bottom: 18px;
+        }
+
+        .menu-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+        }
+
+        .menu-item h4 {
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .menu-item .price {
+            color: #E25B26;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .menu-item p {
+            color: #666666;
+            font-size: 13px;
+            font-weight: 300;
+        }
+
+        .booking-section {
+            padding: 120px max(8%, 20px);
+            background-color: #050505;
+            border-top: 1px solid #111111;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .booking-form {
+            width: 100%;
+            max-width: 600px;
+            background-color: #0c0c0c;
+            border: 1px solid #161616;
+            border-radius: 8px;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .form-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #666666;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            background-color: #050505;
+            border: 1px solid #222222;
+            border-radius: 4px;
+            padding: 16px;
+            color: #ffffff;
+            font-size: 13px;
+            letter-spacing: 1px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus, .form-select:focus {
+            border-color: #E25B26;
+        }
+
+        .vip-highlight {
+            color: #E25B26 !important;
+            font-weight: 700;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        footer {
+            background-color: #020202;
+            padding: 60px max(8%, 20px);
+            text-align: center;
+            border-top: 1px solid #111111;
+            font-size: 11px;
+            color: #444444;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        footer p {
+            margin-bottom: 12px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 900px) {
+            .menu-container {
+                flex-direction: column;
+            }
+            .menu-featured-img {
+                height: 260px;
+                min-height: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 20px max(5%, 20px); }
+            nav { display: none; } 
+            .services, .menu-section, .booking-section { padding: 80px max(5%, 20px); }
+            .booking-form { padding: 35px 25px; }
+            .form-row { grid-template-columns: 1fr; gap: 25px; }
+            .modal-body { padding: 25px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div class="logo-badge">
+                <img src="aura.jpg" alt="AURA" class="logo-img">
+            </div>
+            <div style="display: flex; flex-direction: column; justify-content: center; line-height: 1.1;">
+                <span style="font-size: 20px; font-weight: 900; letter-spacing: 2px; color: #ffffff;">aURa</span>
+                <span style="font-size: 8px; font-weight: 700; letter-spacing: 1.5px; color: #E25B26; text-transform: uppercase; margin-top: 2px;">Garden. Lounge. Bar</span>
+            </div>
+        </div>
+        <nav>
+            <a href="#services">Experiences</a>
+            <a href="#menu">Menu</a>
+            <a href="#reserve">Book Lounge</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1><span>WELCOME TO AURA LOUNGE</span>EXPERIENCE LUXURY REDEFINED</h1>
+        <p>An upscale sanctuary designed for elite networking, exceptional dining, and unmatched curated nightlife.</p>
+        <a href="#reserve" class="btn">RESERVE AN EXPERIENCE</a>
+    </section>
+
+    <!-- OFFERINGS WITH INTERACTIVE MODALS -->
+    <section id="services" class="services">
+        <h2 class="section-title">Our Offerings</h2>
+        <p class="section-subtitle">Curated pathways for the modern vanguard</p>
+        <div class="grid">
+            <div class="card" onclick="openExperienceModal('FINE DINING ARCHIVE')">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80" alt="Fine Dining" class="card-img">
+                </div>
+                <div class="card-content">
+                    <h3>FINE DINING <span>➔</span></h3>
+                    <p>Curated culinary masterpieces prepared by world-class chefs, tailored specifically for sophisticated palates.</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openExperienceModal('PRIVATE VIP SUITE')">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1578474846511-04ba529f0b88?auto=format&fit=crop&w=800&q=80" alt="Private Suites" class="card-img">
+                </div>
+                <div class="card-content">
+                    <h3>PRIVATE SUITES <span>➔</span></h3>
+                    <p>Exclusive, acoustic-optimized VIP spaces with dedicated hosts, perfect for key transactions or close celebrations.</p>
+                </div>
+            </div>
+
+            <div class="card" onclick="openExperienceModal('WEEKEND GUESTLIST SELECTION')">
+                <div class="card-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=800&q=80" alt="Curated Sets" class="card-img">
+                </div>
+                <div class="card-content">
+                    <h3>CURATED SETS <span>➔</span></h3>
+                    <p>High-energy weekend nightlife showcases featuring elite global sound selectors and premium hosting.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERIENCE MODAL WINDOW -->
+    <div class="modal-overlay" id="expModalOverlay" onclick="closeModalOnOverlay(event)">
+        <div class="modal-container">
+            <div class="modal-close" onclick="closeExperienceModal()">&times;</div>
+            <img id="modalImg" class="modal-header-img" src="" alt="Experience Detail">
+            <div class="modal-body">
+                <p class="modal-subtitle" id="modalTag">FINE DINING ARCHIVE</p>
+                <h2 class="modal-title" id="modalTitle">GASTRONOMIC SELECTION</h2>
+                <p class="modal-desc" id="modalDesc">Experience description goes here...</p>
+
+                <div class="modal-menu-title">FEATURED HIGHLIGHTS</div>
+                <div class="modal-menu-list" id="modalMenuList">
+                    <!-- Dynamic Menu Items Injected Here -->
+                </div>
+
+                <button class="btn" style="width: 100%; text-align: center;" onclick="reserveFromModal()">RESERVE THIS EXPERIENCE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MENU SECTION -->
+    <section id="menu" class="menu-section">
+        <h2 class="section-title">The Curated Menu</h2>
+        <p class="section-subtitle">A brief overview of our sensory profile</p>
+
+        <div class="menu-tabs">
+            <button class="tab-btn active" onclick="switchTab(event, 'starters', 'https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=800&q=80', 'CRISPY CALAMARI TRIO', 'SIGNATURE STARTER')">Starters</button>
+            <button class="tab-btn" onclick="switchTab(event, 'mains', 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80', 'TOMAHAWK STEAK (600G)', 'PRIME CUT SELECTION')">Mains</button>
+            <button class="tab-btn" onclick="switchTab(event, 'cocktails', 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800&q=80', 'AURA ELIXIR', 'CRAFT MIXOLOGY')">Mixology</button>
+        </div>
+
+        <div class="menu-container">
+            <div class="menu-featured-img">
+                <img id="menuPreviewImg" src="https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=800&q=80" alt="Featured Dish">
+                <div class="img-caption">
+                    <h5 id="previewTitle">CRISPY CALAMARI TRIO</h5>
+                    <p id="previewTag">SIGNATURE STARTER</p>
+                </div>
+            </div>
+
+            <div class="menu-content">
+                <div id="starters" class="menu-grid active">
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <h4>Crispy Calamari Trio</h4>
+                            <span class="price">₦18,500</span>
+                        </div>
+                        <p>Sriracha lime glaze, micro cilantro, toasted sesame seeds.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <h4>Glazed Pork Belly Bites</h4>
+                            <span class="price">₦22,000</span>
+                        </div>
+                        <p>Slow-roasted pork shoulder cubed with honey ginger reduction.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <h4>Truffle Parmesan Fries</h4>
+                            <span class="price">₦14,000</span>
+                        </div>
+                        <p>Hand-cut potatoes tossed in premium white truffle essence.</p>
+                    </div>
+                </div>
+
+                <div id="mains" class="menu-grid">
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <h4>Tomahawk Steak (600g)</h4>
+                            <span class="price">₦85,000</span>
+                        </div>
+                        <p>Flame-grilled premium cut served with roasted garlic bone marrow butter.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <h4>Pan-Seared Atlantic Salmon</h4>
+                            <span class="price">₦38,500</span>
+                        </div>
+                        <p>Saffron risotto base, asparagus tips, lemon-herb emulsion.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <h4>Signature Charcoal Jollof</h4>
+                            <span class="price">₦26,000</span>
+                        </div>
+                        <p>Smoked firewood flavor profile with choice of slow-braised beef or grill chicken.</p>
+                    </div>
+                </div>
+
+                <div id="cocktails" class="menu-grid">
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <h4>Aura Elixir</h4>
+                            <span class="price">₦12,500</span>
+                        </div>
+                        <p>Aged dark rum, gold dust flake, passionfruit paste, fresh lime.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <h4>Smoked Old Fashioned</h4>
+                            <span class="price">₦14,000</span>
+                        </div>
+                        <p>Bourbon whiskey, angostura bitters, applewood smoke infusion base.</p>
+                    </div>
+                    <div class="menu-item">
+                        <div class="menu-item-header">
+                            <h4>Lekki Sunset Mist</h4>
+                            <span class="price">₦11,500</span>
+                        </div>
+                        <p>Premium gin, elderflower liqueur, sparkling rosé top, mint sprig.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BOOKING SECTION -->
+    <section id="reserve" class="booking-section">
+        <h2 class="section-title">Secure Entry</h2>
+        <p class="section-subtitle">Bypassing standard door checks through reservation manifest</p>
+
+        <form class="booking-form" id="manifestForm" onsubmit="handleBooking(event)">
+            <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" id="guestName" class="form-input" placeholder="ENTER VALID SURNAME & FIRST NAME" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Phone Contact</label>
+                    <input type="tel" id="guestPhone" class="form-input" placeholder="+234..." required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Experience Pathway</label>
+                    <select id="experienceType" class="form-select" required>
+                        <option value="" disabled selected hidden>SELECT EXPERIENCES</option>
+                        <option value="FINE DINING ARCHIVE">FINE DINING ARCHIVE</option>
+                        <option value="PRIVATE VIP SUITE">PRIVATE VIP SUITE</option>
+                        <option value="WEEKEND GUESTLIST SELECTION">WEEKEND GUESTLIST SELECTION</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Reservation Date</label>
+                    <input type="date" id="reserveDate" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Party Count</label>
+                    <select id="partyCount" class="form-select" required>
+                        <option value="1 Guest">1 GUEST</option>
+                        <option value="2 Guests">2 GUESTS</option>
+                        <option value="4 Guests">4 GUESTS</option>
+                        <option value="6+ VIP Package" class="vip-highlight">6+ VIP PACKAGE ★</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn" style="width: 100%; text-align: center; margin-top: 15px;">SUBMIT MANIFEST REQUEST</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 AURA LOUNGE LUXURY ARCHIVE. ALL RIGHTS RESERVED.</p>
+        <p>Ikeja, Lagos, Nigeria | +234 8085829437</p>
+    </footer>
+
+    <script>
+        const experienceData = {
+            'FINE DINING ARCHIVE': {
+                tag: 'GASTRONOMY ARCHIVE',
+                title: 'FINE DINING EXPERIENCE',
+                image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=1200&q=80',
+                description: 'Indulge in an extraordinary 5-course culinary journey meticulously created by our executive culinary team. Featuring sustainable prime cuts, rare seafood selections, and signature wine pairings.',
+                menu: [
+                    { name: 'Flame-Grilled Tomahawk Steak (600g)', price: '₦85,000' },
+                    { name: 'Pan-Seared Atlantic Salmon', price: '₦38,500' },
+                    { name: 'Glazed Pork Belly Bites', price: '₦22,000' },
+                    { name: 'Signature Charcoal Jollof', price: '₦26,000' }
+                ]
+            },
+            'PRIVATE VIP SUITE': {
+                tag: 'EXCLUSIVITY & SECLUSION',
+                title: 'PRIVATE VIP SUITE',
+                image: 'https://images.unsplash.com/photo-1578474846511-04ba529f0b88?auto=format&fit=crop&w=1200&q=80',
+                description: 'Our soundproof, plush VIP suites offer total discretion with custom lighting, private mixology stations, and a personal host dedicated exclusively to your group all night.',
+                menu: [
+                    { name: 'Dom Pérignon Vintage Bottle', price: '₦450,000' },
+                    { name: 'Artisanal Caviar & Blini Platter', price: '₦120,000' },
+                    { name: 'Smoked Old Fashioned Decanter', price: '₦55,000' },
+                    { name: 'AURA VIP Wagyu Sliders', price: '₦35,000' }
+                ]
+            },
+            'WEEKEND GUESTLIST SELECTION': {
+                tag: 'CURATED NIGHTLIFE',
+                title: 'CURATED SETS & LOUNGE',
+                image: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=1200&q=80',
+                description: 'Immerse yourself in high-energy nightlife powered by world-renowned DJs, immersive lighting displays, and prime table placement right near the main stage.',
+                menu: [
+                    { name: 'Aura Elixir Pitcher', price: '₦45,000' },
+                    { name: 'Crispy Calamari Trio Platter', price: '₦28,000' },
+                    { name: 'Lekki Sunset Mist Bottle Service', price: '₦60,000' },
+                    { name: 'Truffle Parmesan Snack Basket', price: '₦20,000' }
+                ]
+            }
+        };
+
+        let activeSelectedExp = '';
+
+        function openExperienceModal(expKey) {
+            const data = experienceData[expKey];
+            if (!data) return;
+
+            activeSelectedExp = expKey;
+            document.getElementById('modalTag').innerText = data.tag;
+            document.getElementById('modalTitle').innerText = data.title;
+            document.getElementById('modalImg').src = data.image;
+            document.getElementById('modalDesc').innerText = data.description;
+
+            const listContainer = document.getElementById('modalMenuList');
+            listContainer.innerHTML = '';
+            data.menu.forEach(item => {
+                listContainer.innerHTML += `
+                    <div class="modal-menu-item">
+                        <span class="modal-menu-item-name">${item.name}</span>
+                        <span class="modal-menu-item-price">${item.price}</span>
+                    </div>
+                `;
+            });
+
+            document.getElementById('expModalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeExperienceModal() {
+            document.getElementById('expModalOverlay').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function closeModalOnOverlay(e) {
+            if (e.target.id === 'expModalOverlay') {
+                closeExperienceModal();
+            }
+        }
+
+        function reserveFromModal() {
+            const selectEl = document.getElementById('experienceType');
+            if (selectEl && activeSelectedExp) {
+                selectEl.value = activeSelectedExp;
+            }
+            closeExperienceModal();
+            document.getElementById('reserve').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function switchTab(event, tabId, imgSrc, title, tag) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.menu-grid').forEach(grid => grid.classList.remove('active'));
+            
+            event.currentTarget.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+
+            if (imgSrc) {
+                const imgEl = document.getElementById('menuPreviewImg');
+                imgEl.style.opacity = '0.3';
+                setTimeout(() => {
+                    imgEl.src = imgSrc;
+                    document.getElementById('previewTitle').innerText = title;
+                    document.getElementById('previewTag').innerText = tag;
+                    imgEl.style.opacity = '1';
+                }, 200);
+            }
+        }
+
+        function handleBooking(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('guestName').value.toUpperCase();
+            const experience = document.getElementById('experienceType').value;
+            const date = document.getElementById('reserveDate').value;
+            const guests = document.getElementById('partyCount').value.toUpperCase();
+            
+            const manifestId = "AURA-" + Math.floor(1000 + Math.random() * 9000);
+            const bookingSection = document.getElementById('reserve');
+            
+            const displayColor = '#E25B26';
+            
+            bookingSection.innerHTML = `
+                <div style="width: 100%; max-width: 500px; background-color: #0c0c0c; border: 1px solid ${displayColor}; border-radius: 8px; padding: 40px 30px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.8); position: relative; animation: fadeIn 0.6s ease;">
+                    <div style="position: absolute; top: -2px; left: 50%; transform: translateX(-50%); width: 80px; height: 4px; background-color: ${displayColor}; border-radius: 2px;"></div>
+                    
+                    <h2 style="color: ${displayColor}; font-size: 20px; letter-spacing: 3px; margin-bottom: 5px; font-weight: 900;">MANIFEST VERIFIED</h2>
+                    <p style="color: #666666; font-size: 11px; letter-spacing: 2px; margin-bottom: 30px;">SECURE ENTRY GRANTED</p>
+                    
+                    <div style="border-top: 1px dashed #222; border-bottom: 1px dashed #222; padding: 25px 0; margin-bottom: 30px; text-align: left; display: flex; flex-direction: column; gap: 15px;">
+                        <div>
+                            <span style="font-size: 9px; color: #444; letter-spacing: 2px; display: block;">PASS HOLDER</span>
+                            <strong style="font-size: 14px; color: #fff; letter-spacing: 1px;">${name}</strong>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div>
+                                <span style="font-size: 9px; color: #444; letter-spacing: 2px; display: block;">ACCESS LEVEL</span>
+                                <strong style="font-size: 12px; color: #E25B26; letter-spacing: 1px;">${experience}</strong>
+                            </div>
+                            <div>
+                                <span style="font-size: 9px; color: #444; letter-spacing: 2px; display: block;">PARTY COUNT</span>
+                                <strong style="font-size: 12px; color: #fff; letter-spacing: 1px;">${guests}</strong>
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div>
+                                <span style="font-size: 9px; color: #444; letter-spacing: 2px; display: block;">DATE</span>
+                                <strong style="font-size: 12px; color: #fff; letter-spacing: 1px;">${date}</strong>
+                            </div>
+                            <div>
+                                <span style="font-size: 9px; color: #444; letter-spacing: 2px; display: block;">MANIFEST ID</span>
+                                <strong style="font-size: 12px; color: #E25B26; letter-spacing: 1px;">${manifestId}</strong>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p style="color: #888; font-size: 12px; font-weight: 300; line-height: 1.6; margin-bottom: 25px;">
+                        A digital copy of this receipt has been logged to the venue registry. Please present this screen to the host desk upon arrival.
+                    </p>
+                    
+                    <button onclick="window.location.reload()" style="font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #666; text-transform: uppercase; cursor: pointer; transition: color 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#666'">
+                        ← Book Another Experience
+                    </button>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
